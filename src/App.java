@@ -17,10 +17,11 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 public class App {
     public static String absolutePath = "";
+    public static boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
     public static void main(String[] args) {
         
         
-        boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
+        
         if (isWindows) {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -208,7 +209,13 @@ public class App {
         String path = absolutePath;
         File selectedFile2 = new File(path);
         String packFolder = folder;
-        String itemTexturePath = packFolder + "\\assets\\minecraft\\textures\\item";
+        String itemTexturePath = "";
+        if (isWindows) {
+            itemTexturePath = packFolder + "\\assets\\minecraft\\textures\\item";
+        } else {
+            itemTexturePath = packFolder + "/assets/minecraft/textures/item";
+        }
+        
         copyPackImage(selectedFile2, packFolder);
         copyImage(selectedFile2, itemTexturePath);
     }
